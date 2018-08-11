@@ -26,7 +26,7 @@ class Register extends React.Component{
     this.setState({password:event.target.value})
   }
   onSubmitSignIn=()=>{
-    fetch('http://localhost:3000/register',{
+    fetch('https://obscure-gorge-27225.herokuapp.com/register',{
 
     method: 'post',
     headers:{'Content-Type':'application/json'},
@@ -36,7 +36,7 @@ class Register extends React.Component{
       name: this.state.name
     })
     }).then(response=>response.json()).then(user=>{
-      if (user){
+      if (user.id){
         this.props.loadUser(user)
         this.props.onRouteChange('home')
       }

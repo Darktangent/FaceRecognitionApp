@@ -11,9 +11,7 @@ import SignIn from './components/SignIn/SignIn1.js'
 import Register from './components/Register/Register.js'
 import Rank from './components/Rank/Rank'
 
-const app = new Clarifai.App({
-  apiKey: 'da534ae55016476abdfa667c1218da57'
- });
+
 
 const particlesOptions={
   particles: {
@@ -95,12 +93,17 @@ class App extends Component {
   onButtonSubmit=()=>{
 
     this.setState({imageUrl:this.state.input})
-    app.models.predict(
-      Clarifai.FACE_DETECT_MODEL,
-      this.state.input)
+    fetch('https://obscure-gorge-27225.herokuapp.com/imageurl', {
+      method:'post',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        input: this.state.input
+      })
+
+    }).then(response=>response.json())
       .then(response=> {
         if (response){
-          fetch('http://localhost:3000/image', {
+          fetch('https://obscure-gorge-27225.herokuapp.com/image', {
             method:'put',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
